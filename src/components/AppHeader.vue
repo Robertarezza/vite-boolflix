@@ -15,10 +15,7 @@ export default {
 </script>
 
 <template>
-   <div>
-    <input type="cerca" name="" value="">
-    <button type="cerca">clicca</button>
-   </div>
+   
 
 </template>
 
