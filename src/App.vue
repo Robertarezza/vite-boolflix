@@ -15,29 +15,41 @@ export default {
   },
   data() {
     return {
-     
+     searchCompleat: false,
       store,
     };
   },
   methods: {
-    getSearch () {
-      axios
-        .get("https://api.themoviedb.org/3/search/movie", {
+  getSearch() {
+    axios
+      .get("https://api.themoviedb.org/3/search/movie", {
+        params: {
+          api_key: this.store.api_Key,
+          query: this.store.selectedMovies,
+        }
+      })
+      .then((resp) => {
+        console.log(resp);
+        this.store.movieArrey = resp.data.results;
+
+      
+        return axios.get("https://api.themoviedb.org/3/search/tv", {
           params: {
             api_key: this.store.api_Key,
             query: this.store.selectedMovies,
-
           }
-        })
-        .then((resp) => {
-          console.log(resp);
-          this.store.movieArrey = resp.data.results,
-          console.log(resp.data.results);
-          console.log(resp.data.results.title);
         });
-    }
-  },
-
+      })
+      .then((resp) => {
+        console.log(resp);
+        this.store.tvArrey = resp.data.results;
+        this.searchCompleat = true,
+        console.log(resp.data.results);
+       
+      })
+     
+  }
+}
  
  
 };
@@ -47,7 +59,7 @@ export default {
 <template>
 <AppHeader />
 <AppSearch @cerca="getSearch"/>
-<AppMain />
+<AppMain v-if="searchCompleat" />
 </template>
 
 <style lang="scss">
