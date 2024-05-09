@@ -18,10 +18,9 @@ export default {
 <template>
   <main>
     <div class="container mt-5">
-      <h1>Film</h1>
+      <h1 class="title">Film</h1>
       <div class="row row-cols-4"> 
         <div class="col mb-4" v-for="movie in store.movieArrey">
-          
           <AppMovies :moviedObj="movie"/>
         </div>
       </div>
@@ -37,7 +36,12 @@ export default {
 
 <style lang="scss" scoped>
 main{
-  background-color: black;
-  
+  background-color: grey;
+
+  .title {
+    font-size: 3rem;
+    font-weight: 800;
+  }
+
 }
 </style>

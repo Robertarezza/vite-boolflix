@@ -3,14 +3,14 @@ import axios from "axios";
 import { store } from "./store";
 import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
-import AppSearch from "./components/AppSearch.vue";
+
 
 export default {
  
   components: {
     AppHeader,
     AppMain,
-    AppSearch,
+
 
   },
   data() {
@@ -57,8 +57,7 @@ export default {
 </script>
 
 <template>
-<AppHeader />
-<AppSearch @cerca="getSearch"/>
+<AppHeader  @cerca="getSearch"/>
 <AppMain v-if="searchCompleat" />
 </template>
 
