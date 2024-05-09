@@ -3,15 +3,14 @@ import axios from "axios";
 import { store } from "./store";
 import AppHeader from "./components/AppHeader.vue";
 import AppMain from "./components/AppMain.vue";
-
+import AppTemp from "./components/AppTemp.vue";
 
 export default {
  
   components: {
     AppHeader,
     AppMain,
-
-
+    AppTemp,
   },
   data() {
     return {
@@ -59,8 +58,10 @@ export default {
 <template>
 <AppHeader  @cerca="getSearch"/>
 <AppMain v-if="searchCompleat" />
+<AppTemp v-else/>
 </template>
 
 <style lang="scss">
+
 
 </style>

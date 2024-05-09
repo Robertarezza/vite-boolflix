@@ -16,7 +16,7 @@ export default {
 
 <template>
   <header>
-  <div class=" container d-flex justify-content-between align-items-center pt-4 ps-3 pe-5"> 
+  <div class=" container d-flex justify-content-between align-items-center pt-4 ps-3 pe-5 pb-4"> 
   <div>
     <h1>BOOLFLIX</h1>
   </div>

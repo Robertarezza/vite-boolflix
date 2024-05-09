@@ -27,9 +27,7 @@ export default {
           return new URL(`../assets/img/mondo.jpg`, import.meta.url).href;
       }
     },
-    convertVote(vote) {
-      return Math.ceil(vote / 2);
-    },
+   
     getVision (event) {
       event.preventDefault(); 
       this.show = false;
@@ -75,13 +73,15 @@ export default {
       <h2 v-if="moviedObj.original_title">Titolo originale: {{ moviedObj.original_title }}</h2>
       <h2 v-else>Titolo originale: {{ moviedObj.original_name }}</h2>
       <img :src="getLanguageFlagIcon(moviedObj.original_language)" class="lang" alt="" />
-      <h4>
+      <h4> Voto: 
         <i
           v-for="index in 5"
           :class="{ 'star-filled': index <= Math.ceil(moviedObj.vote_average / 2) }"
           class="fa-solid fa-star"
         ></i>
       </h4>
+      <p v-if="moviedObj.overview">Overview: {{moviedObj.overview}}</p>
+      <p v-else></p>
     </div>
   </div>
 </template>
@@ -124,6 +124,9 @@ export default {
     h2 {
       font-size: 1rem;
       padding-bottom: 10px;
+    }
+    p {
+      font-size: x-small;
     }
   }
 
