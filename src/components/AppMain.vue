@@ -1,10 +1,14 @@
 <script>
 import { store } from "../store";
 import AppMovies from "./AppMovies.vue";
+import AppTv from "./AppTv.vue";
+import AppFilms from "./AppFilms.vue";
 
 export default {
   components: {
     AppMovies,
+    AppTv,
+    AppFilms,
   },
   data() {
     return {
@@ -23,12 +27,20 @@ export default {
         <div class="col mb-4" v-for="movie in store.movieArrey">
           <AppMovies :moviedObj="movie"/>
         </div>
+        <div class="col mb-4" v-for="movie in store.movieArrey">
+          <AppFilms :moviedObj="movie"/>
+         
+        </div>
       </div>
       <h1 class="title">Serie Tv</h1>
       <div class="row row-cols-4">
         <div class="col mb-4" v-for="tv in store.tvArrey">
           <AppMovies :moviedObj="tv"/>
         </div> 
+        <div class="col mb-4" v-for="tv in store.tvArrey">
+          <AppTv :moviedObj="tv" />
+        </div>
+        
       </div>
     </div>
   </main>
@@ -36,11 +48,12 @@ export default {
 
 <style lang="scss" scoped>
 main{
-  background-color: grey;
+  background-image: url(../assets/img/sfondo.png);
 
   .title {
     font-size: 3rem;
     font-weight: 800;
+    color:black;
   }
 
 }

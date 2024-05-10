@@ -20,9 +20,43 @@ export default {
   },
   methods: {
     getData() {
-      this.getMovie();
-      this.getTv();
+        this.getMovie();
+        this.getTv();
+      },
+
+      searchTv() {
+      console.log("fatto");
+      axios
+        .get("https://api.themoviedb.org/3/search/tv?api_key=a2493a63d1f1247edf82ea1f6793fb71&query=a")
+        .then((resp) => {
+          console.log(resp);
+          this.store.tvArrey = resp.data.results;
+          console.log(resp.data.results);
+        })
+        .catch((error) => {
+           console.log(error);
+         })
+         .finally(() => {
+           this.isLoading = false; 
+         });
     },
+    searchFilms() {
+      console.log("fatto");
+      axios
+        .get("https://api.themoviedb.org/3/search/movie?api_key=a2493a63d1f1247edf82ea1f6793fb71&query=a")
+        .then((resp) => {
+          console.log(resp);
+          this.store.tvArrey = resp.data.results;
+          console.log(resp.data.results);
+        })
+        .catch((error) => {
+           console.log(error);
+         })
+         .finally(() => {
+           this.isLoading = false; 
+         });
+    },
+  
     getMovie() {
       axios
         .get("https://api.themoviedb.org/3/search/movie", {
@@ -33,7 +67,7 @@ export default {
         })
         .then((resp) => {
           console.log(resp);
-          this.store.movieArray = resp.data.results;
+          this.store.movieArrey = resp.data.results;
         })
         .catch((error) => {
           console.log(error);
@@ -52,7 +86,7 @@ export default {
         })
         .then((resp) => {
           console.log(resp);
-          this.store.tvArray = resp.data.results;
+          this.store.tvArrey = resp.data.results;
           console.log(resp.data.results);
         })
         .catch((error) => {
@@ -61,14 +95,15 @@ export default {
         .finally(() => {
           this.isLoading = false; 
         });
-    }
+    },
+    
   }
 };
 
 </script>
 
 <template>
-<AppHeader  @cerca="getData"/>
+<AppHeader  @cerca="getData" @searchTv="searchTv" @searchmovie="searchFilms" />
 <AppMain v-if="!isLoading" />
 <AppTemp v-else/>
 </template>
