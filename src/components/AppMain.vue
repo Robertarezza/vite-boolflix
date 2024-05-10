@@ -49,6 +49,7 @@ export default {
 <style lang="scss" scoped>
 main{
   background-image: url(../assets/img/sfondo.png);
+   background-size: cover;
 
   .title {
     font-size: 3rem;

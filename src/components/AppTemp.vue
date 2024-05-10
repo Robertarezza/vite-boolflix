@@ -15,5 +15,6 @@ div{
     background-image: url(../assets/img/sfondo.png);
     height:87.2vh;
     overflow: hidden;
+    background-size: cover;
 }
 </style>
