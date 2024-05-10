@@ -26,8 +26,8 @@ export default {
       </div>
       <h1 class="title">Serie Tv</h1>
       <div class="row row-cols-4">
-        <div class="col mb-4" v-for="movie in store.tvArrey">
-          <AppMovies :moviedObj="movie"/>
+        <div class="col mb-4" v-for="tv in store.tvArrey">
+          <AppMovies :moviedObj="tv"/>
         </div> 
       </div>
     </div>

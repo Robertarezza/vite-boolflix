@@ -12,7 +12,8 @@ export default {
 
 <style lang="scss" scoped>
 div{
-    background-color: grey;
-    height:100vh;
+    background-image: url(../assets/img/sfondo.png);
+    height:87.2vh;
+    overflow: hidden;
 }
 </style>

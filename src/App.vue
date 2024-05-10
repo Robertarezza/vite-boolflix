@@ -6,7 +6,6 @@ import AppMain from "./components/AppMain.vue";
 import AppTemp from "./components/AppTemp.vue";
 
 export default {
- 
   components: {
     AppHeader,
     AppMain,
@@ -14,53 +13,65 @@ export default {
   },
   data() {
     return {
-     searchCompleat: false,
+     
       store,
+      isLoading: true,
     };
   },
   methods: {
-  getSearch() {
-    axios
-      .get("https://api.themoviedb.org/3/search/movie", {
-        params: {
-          api_key: this.store.api_Key,
-          query: this.store.selectedMovies,
-        }
-      })
-      .then((resp) => {
-        console.log(resp);
-        this.store.movieArrey = resp.data.results;
-
-      
-        return axios.get("https://api.themoviedb.org/3/search/tv", {
+    getData() {
+      this.getMovie();
+      this.getTv();
+    },
+    getMovie() {
+      axios
+        .get("https://api.themoviedb.org/3/search/movie", {
           params: {
             api_key: this.store.api_Key,
             query: this.store.selectedMovies,
           }
+        })
+        .then((resp) => {
+          console.log(resp);
+          this.store.movieArray = resp.data.results;
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.isLoading = false; 
         });
-      })
-      .then((resp) => {
-        console.log(resp);
-        this.store.tvArrey = resp.data.results;
-        this.searchCompleat = true,
-        console.log(resp.data.results);
-       
-      })
-     
+    },
+    getTv() {
+      axios
+        .get("https://api.themoviedb.org/3/search/tv", {
+          params: {
+            api_key: this.store.api_Key,
+            query: this.store.selectedMovies,
+          },
+        })
+        .then((resp) => {
+          console.log(resp);
+          this.store.tvArray = resp.data.results;
+          console.log(resp.data.results);
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          this.isLoading = false; 
+        });
+    }
   }
-}
- 
- 
 };
 
 </script>
 
 <template>
-<AppHeader  @cerca="getSearch"/>
-<AppMain v-if="searchCompleat" />
+<AppHeader  @cerca="getData"/>
+<AppMain v-if="!isLoading" />
 <AppTemp v-else/>
 </template>
-
 <style lang="scss">
 
 

@@ -5,12 +5,19 @@ export default {
   },
   data() {
     return {
-      show: true,
-      animation: false,
+     
     };
   },
+  computed: {
+    cardTitle() {
+      return !!this.moviedObj.title ? this.moviedObj.title : this.moviedObj.name;
+    },
+    cardOriginalTitle() {
+      return !!this.moviedObj.original_title ? this.moviedObj.original_title : this.moviedObj.original_name ;
+    }
+  },
   methods: {
-    // Metodo per ottenere l'icona della bandiera corrispondente alla lingua
+    // ottenere l'icona della bandiera corrispondente alla lingua
     getLanguageFlagIcon(language) {
       if (!language) return "";
       switch (language.toLowerCase()) {
@@ -27,98 +34,109 @@ export default {
           return new URL(`../assets/img/mondo.jpg`, import.meta.url).href;
       }
     },
-   
-    getVision (event) {
-      event.preventDefault(); 
-      this.show = false;
-      setTimeout (( ) => {
-        this.animation = false;
-      }, 1000);
-    },
-    getVisionBack (event) {
-      event.preventDefault(); 
-      this.show = true;
-      if(!this.animation) {
-        setTimeout (( ) => {
-        this.animation = true;
-      }, 1000);
-      }
-    }
-  
   },
 };
 </script>
 
 <template>
-  <div class="card" @mouseover="getVision" @mouseleave="getVisionBack">
-    <div class="front" v-show="show">
-      <div>
+  <div class="flip-card">
+    <div class="flip-card-inner">
+      <div class="front" >
         <img
           v-if="moviedObj.poster_path === null && moviedObj.backdrop_path === null"
           class="pellicola"
           src="../assets/img/pellicola.jpg"
           alt=""
         />
-        <img class="pellicola"
+        <img
+          class="pellicola"
           v-else
           :src="`https://image.tmdb.org/t/p/w342/${moviedObj.poster_path}`"
           alt=""
         />
       </div>
+      <div class="back" >
+        <h1>Titolo: {{ cardTitle }}</h1>
+        <h2 >Titolo originale: {{ cardOriginalTitle}}</h2>
+        <h3>
+        Language: 
+          <img
+          :src="getLanguageFlagIcon(moviedObj.original_language)"
+          class="lang"
+          alt=""/>
+        </h3>
        
-    </div>
-    <div class="back" v-show="!show ">
-      <h1 v-if="moviedObj.title">Titolo: {{ moviedObj.title }}</h1>
-      <h1 v-else>Titolo: {{ moviedObj.name }}</h1>
-      <h2 v-if="moviedObj.original_title">Titolo originale: {{ moviedObj.original_title }}</h2>
-      <h2 v-else>Titolo originale: {{ moviedObj.original_name }}</h2>
-      <img :src="getLanguageFlagIcon(moviedObj.original_language)" class="lang" alt="" />
-      <h4> Voto: 
-        <i
-          v-for="index in 5"
-          :class="{ 'star-filled': index <= Math.ceil(moviedObj.vote_average / 2) }"
-          class="fa-solid fa-star"
-        ></i>
-      </h4>
-      <p v-if="moviedObj.overview">Overview: {{moviedObj.overview}}</p>
-      <p v-else></p>
+        <h4>
+          Voto:
+          <i
+            v-for="index in 5"
+            :class="{ 'star-filled': index <= Math.ceil(moviedObj.vote_average / 2) }"
+            class="fa-solid fa-star"
+          ></i>
+        </h4>
+        <p v-if="moviedObj.overview">Overview: {{ moviedObj.overview }}</p>
+        <p v-else></p>
+      </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.card {
-  background-color: black;
+
+.flip-card {
+  background-color: transparent;
   color: white;
-  max-width: 100%;
-   height: 450px;
+  max-width: 96%;
+  height: 450px;
+  cursor: pointer;
+  border-radius: 20px;
   perspective: 1000px;
-  transition: transform 0.5s;
-  position: relative; 
 
-  &:hover {
-    transform: rotateY(180deg);
-    
-    .back {
-  
-     transform: rotateY(180deg);
-   }
+
+  .flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+
+    &:hover {
+      transform: rotateY(180deg);
+    }
   }
-
-  .front .back { 
+    
+  
+  
+  .front {
     position: absolute;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
   }
 
   .back {
     text-align: center;
-  
-    h1{
+    background-color: black;
+    transform: rotateY(180deg);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-backface-visibility: hidden; /* Safari */
+    backface-visibility: hidden;
+
+    h1 {
       font-size: 1.5rem;
-      padding-top:10px;
+      padding-top: 10px;
     }
 
     h2 {
@@ -132,27 +150,22 @@ export default {
 
   .pellicola {
     max-width: 100%;
-  height: 450px;
+    height: 450px;
+    border-radius: 20px;
+  }
+
+  .fa-solid {
+    color: white;
+    border: 1px solid black;
+  }
+
+  .star-filled {
+    color: yellow;
+  }
+  .lang {
+    width: 15%;
+    margin: 10px;
+  }
 }
-
-
-
-.fa-solid {
-  color: white;
-  border: 1px solid black;
-}
-
-.star-filled {
-  color: yellow;
-}
-.lang {
-  width: 25%;
-  margin: 10px;
-}
-}
-
-
-
-
 
 </style>

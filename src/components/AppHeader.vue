@@ -1,7 +1,8 @@
 <script >
 import { store } from "../store";
 export default {
- 
+ //per evitare warning
+ emits: ["cerca"],
   data() {
     return {
      store,
@@ -21,7 +22,7 @@ export default {
     <h1>BOOLFLIX</h1>
   </div>
    <div>
-    <input type="cerca" name=""  v-model="store.selectedMovies" @keydown.enter="$emit('cerca')" >
+    <input type="cerca" name="" aria-label="inizia la ricerca" v-model="store.selectedMovies" placeholder="Search"  @keydown.enter="$emit('cerca')" >
     <!-- <button type="cerca"  >clicca</button> -->
    </div>
   </div>
